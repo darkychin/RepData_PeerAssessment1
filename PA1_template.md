@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
@@ -154,18 +149,18 @@ meanData1
 
 ```
 ## # A tibble: 61 x 2
-##    date          mean
-##    <date>       <dbl>
-##  1 2012-10-01 NaN    
-##  2 2012-10-02   0.438
-##  3 2012-10-03  39.4  
-##  4 2012-10-04  42.1  
-##  5 2012-10-05  46.2  
-##  6 2012-10-06  53.5  
-##  7 2012-10-07  38.2  
-##  8 2012-10-08 NaN    
-##  9 2012-10-09  44.5  
-## 10 2012-10-10  34.4  
+##          date     mean
+##        <date>    <dbl>
+##  1 2012-10-01      NaN
+##  2 2012-10-02  0.43750
+##  3 2012-10-03 39.41667
+##  4 2012-10-04 42.06944
+##  5 2012-10-05 46.15972
+##  6 2012-10-06 53.54167
+##  7 2012-10-07 38.24653
+##  8 2012-10-08      NaN
+##  9 2012-10-09 44.48264
+## 10 2012-10-10 34.37500
 ## # ... with 51 more rows
 ```
 **Plan2: Median for Each Day**
@@ -180,8 +175,8 @@ medianData2
 
 ```
 ## # A tibble: 61 x 2
-##    date       median
-##    <date>      <dbl>
+##          date median
+##        <date>  <dbl>
 ##  1 2012-10-01     NA
 ##  2 2012-10-02      0
 ##  3 2012-10-03      0
@@ -206,18 +201,18 @@ meanData3
 
 ```
 ## # A tibble: 288 x 2
-##    interval   mean
-##       <int>  <dbl>
-##  1        0 1.72  
-##  2        5 0.340 
-##  3       10 0.132 
-##  4       15 0.151 
-##  5       20 0.0755
-##  6       25 2.09  
-##  7       30 0.528 
-##  8       35 0.868 
-##  9       40 0     
-## 10       45 1.47  
+##    interval      mean
+##       <int>     <dbl>
+##  1        0 1.7169811
+##  2        5 0.3396226
+##  3       10 0.1320755
+##  4       15 0.1509434
+##  5       20 0.0754717
+##  6       25 2.0943396
+##  7       30 0.5283019
+##  8       35 0.8679245
+##  9       40 0.0000000
+## 10       45 1.4716981
 ## # ... with 278 more rows
 ```
 **Plan4: Median for Each 5 Minute Interval**
@@ -372,3 +367,28 @@ head(activityNew)
 ```
 
 2. Make a panel plot containing a time series plot (i.e. *type="l"*) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+
+Get average per interval across all days
+
+```r
+avgStepsPerIntervalNew <- 
+  activityNew %>%
+  group_by(interval,day) %>%
+  summarise(avgsteps=mean(steps,na.rm = TRUE))
+```
+Plot time series
+
+```r
+qplot(data = avgStepsPerIntervalNew,
+      x = interval, 
+      y = avgsteps,
+      geom = "line",
+      main = "5-minute Interval of Average Number of Steps Taken Across All Weekday or Weekend",
+      xlab = "5-minute Interval",
+      ylab = "Average Number of Steps Taken",
+      col= I("purple")) +
+    facet_wrap(~day, ncol=1) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-27-1.png)<!-- -->

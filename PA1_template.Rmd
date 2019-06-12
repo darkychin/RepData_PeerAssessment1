@@ -245,3 +245,24 @@ head(activityNew)
 ```
 
 2. Make a panel plot containing a time series plot (i.e. *type="l"*) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+
+Get average per interval across all days
+```{r}
+avgStepsPerIntervalNew <- 
+  activityNew %>%
+  group_by(interval,day) %>%
+  summarise(avgsteps=mean(steps,na.rm = TRUE))
+```
+Plot time series
+```{r}
+qplot(data = avgStepsPerIntervalNew,
+      x = interval, 
+      y = avgsteps,
+      geom = "line",
+      main = "5-minute Interval of Average Number of Steps Taken Across All Weekday or Weekend",
+      xlab = "5-minute Interval",
+      ylab = "Average Number of Steps Taken",
+      col= I("purple")) +
+    facet_wrap(~day, ncol=1) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
