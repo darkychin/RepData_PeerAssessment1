@@ -217,7 +217,7 @@ The *median* of the total number of steps taken per day is **`r finalfullmedian`
 Before|`r finalmean`|`r finalmedian`
 After|`r finalfullmean`|`r finalfullmedian`
 
-From the table, we can see that imputing the 'NA's causes mean to increase and median to reduce.
+From the table, we can see that imputing the 'NA's causes mean and median to increase.
 
 *Total Steps Per Day Before Imput* 
 ```{r}
